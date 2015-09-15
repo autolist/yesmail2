@@ -23,12 +23,12 @@ module Yesmail2
     #   “emails”, “messages”, “full.”
     def self.subscribers(params = {})
       #GET subscribers
-      response = get(full_path, :params => params)
+      get(full_path, :params => params)
     end
 
     def self.view_schema
       #GET subscribers?view=schema
-      response = get(full_path, :params => {:view => 'schema'})
+      get(full_path, :params => {:view => 'schema'})
     end
 
     # A convenience method for viewing what columns are available
@@ -43,7 +43,7 @@ module Yesmail2
       email = URI.encode(email)
 
       #GET subscribers/{id}
-      response = get(full_path(email))
+      get(full_path(email))
     end
 
     def self.profile(email)
@@ -63,7 +63,7 @@ module Yesmail2
     #   information and event history, for the specified subscriber.
     def self.subscriber_divisions(email)
       #https://api.yesmail.com/v2/subscribers/{id}/subscriptions/{name}
-      response = get(full_path(email, 'subscriptions'))
+      get(full_path(email, 'subscriptions'))
     end
 
     # Sets all of the subscriptions for this user to 'unsubscribed'.  Should
@@ -71,7 +71,7 @@ module Yesmail2
     # appear to actually delete a row.  It just unsubscribes.
     def self.delete_subscriber(email)
       #DELETE api.yesmail.com/v2/subscribers/{id}/subscriptions
-      response = delete(full_path(email, 'subscriptions'))
+      delete(full_path(email, 'subscriptions'))
     end
 
     #
@@ -79,7 +79,7 @@ module Yesmail2
     # @param division_name [String]
     def self.subscriber_division_events(email, division_name)
       #GET api.yesmail.com/v2/subscribers/{id}/subscriptions/{name}
-      response = get(full_path(email, 'subscriptions', division_name))
+      get(full_path(email, 'subscriptions', division_name))
     end
 
     # see: https://developer.yesmail.com/post-subscriberssearch-0
@@ -114,7 +114,7 @@ module Yesmail2
       search = Array.wrap(search)
       payload = {:query => search}
 
-      response = post(full_path('search'), payload.to_json, :content_type => :json, :accept => :json, :params => params)
+      post(full_path('search'), payload.to_json, :content_type => :json, :accept => :json, :params => params)
     end
 
     # The subscriber array should look like....
@@ -160,7 +160,7 @@ module Yesmail2
       divisions = [divisions] if divisions.is_a?(String)
 
       data = {
-        :existingSubscribers => existing_subscribers,
+        :importType => existing_subscribers,
         :resubscribe => true,
         :memberOf => divisions,
         :subscribers => subscribers
