@@ -160,9 +160,13 @@ module Yesmail2
       divisions = [divisions] if divisions.is_a?(String)
 
       data = {
+        :defaults => {
+          :resubscribe => resubscribe,
+          :subscriptions => {
+            :memberOf => divisions
+          }
+        },
         :importType => existing_subscribers,
-        :resubscribe => true,
-        :memberOf => divisions,
         :subscribers => subscribers
       }
 
